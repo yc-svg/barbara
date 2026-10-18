@@ -113,7 +113,7 @@ button:focus-visible,a:focus-visible,select:focus-visible,input:focus-visible,su
 
   <ol class="list" id="list"></ol>
 
-  <footer>Distances à vol d'oiseau, temps de marche estimé à 4,8 km/h. Sélection d'adresses réputées, vérifiez les horaires sur Maps avant d'y aller. Prix : € moins de 15 €, €€ 15 à 35 €, €€€ plus de 35 € par personne.</footer>
+  <footer>Distances à vol d'oiseau, temps de marche estimé à 4,8 km/h. Sélection d'adresses réputées, vérifiez les horaires sur Maps avant d'y aller. Prix (restaurants) : € moins de 15 €, €€ 15 à 35 €, €€€ plus de 35 € par personne.</footer>
 </div>
 
 <script>
@@ -128,7 +128,7 @@ const CITIES = {
     ["Vatican / Prati",41.9060,12.4560],["Place d'Espagne",41.9058,12.4823],["Testaccio",41.8770,12.4760]]}
 };
 
-// cat: pizza | trattoria | street | sweet | cafe
+// cat: pizza | trattoria | street | sweet | cafe | kids
 const SPOTS = [
   // NAPLES
   {c:"naples",n:"L'Antica Pizzeria da Michele",a:"Via Cesare Sersale 1",ll:[40.8497,14.2632],cat:"pizza",p:"€",d:"Le temple de la pizza depuis 1870 : seulement marinara et margherita.",t:"Prenez un ticket à l'entrée, la file avance vite."},
@@ -153,6 +153,15 @@ const SPOTS = [
   {c:"naples",n:"Pintauro",a:"Via Toledo 275",ll:[40.8386,14.2484],cat:"sweet",p:"€",d:"La maison qui a inventé la sfogliatella moderne, minuscule boutique sur Toledo.",t:"À emporter, à manger tout de suite."},
   {c:"naples",n:"Gran Caffè Gambrinus",a:"Via Chiaia 1",ll:[40.8367,14.2491],cat:"cafe",p:"€€",d:"Le grand café Belle Époque de Naples, sur la place du Plebiscito.",t:"Au comptoir le café est bien moins cher qu'en salle."},
   {c:"naples",n:"Gelateria della Scimmia",a:"Piazza Carità 4",ll:[40.8453,14.2490],cat:"sweet",p:"€",d:"Glacier historique, célèbre pour son 'scimmia' enrobé de chocolat.",t:"Pratique en remontant Via Toledo."},
+
+  {c:"naples",n:"Città della Scienza",a:"Via Coroglio 104",ll:[40.8058,14.1765],cat:"kids",p:"€€",d:"Musée des sciences interactif avec planétarium et corps humain géant (Corporea), parfait à 10-12 ans.",t:"Comptez une demi-journée, au bord de la mer à Bagnoli."},
+  {c:"naples",n:"Zoo di Napoli",a:"Viale John Fitzgerald Kennedy 76",ll:[40.8215,14.1860],cat:"kids",p:"€€",d:"Zoo dans un grand parc ombragé, à taille humaine pour les petits.",t:"Juste à côté d'Edenlandia, combinez les deux."},
+  {c:"naples",n:"Edenlandia",a:"Viale John Fitzgerald Kennedy 76",ll:[40.8200,14.1830],cat:"kids",p:"€€",d:"Le parc d'attractions historique de Naples, manèges pour tous les âges.",t:"Vérifiez les horaires, souvent ouvert surtout le week-end hors saison."},
+  {c:"naples",n:"Villa Comunale",a:"Riviera di Chiaia",ll:[40.8335,14.2365],cat:"kids",p:"Gratuit",d:"Grand jardin en bord de mer, location de vélos et de rosalies.",t:"Le musée Darwin-Dohrn (aquarium) est dans le parc."},
+  {c:"naples",n:"Castel dell'Ovo",a:"Via Eldorado 3",ll:[40.8282,14.2477],cat:"kids",p:"Gratuit",d:"Château fort sur la mer, remparts et canons qui plaisent aux enfants.",t:"Puis une glace sur le Borgo Marinari juste à côté."},
+  {c:"naples",n:"Napoli Sotterranea",a:"Piazza San Gaetano 68",ll:[40.8510,14.2577],cat:"kids",p:"€€",d:"Visite guidée des souterrains gréco-romains, passages à la bougie.",t:"Le passage à la bougie est le moment préféré des 10-12 ans."},
+  {c:"naples",n:"Funiculaire et Castel Sant'Elmo",a:"Via Tito Angelini 22",ll:[40.8434,14.2390],cat:"kids",p:"€",d:"Montée en funiculaire puis forteresse avec la plus belle vue sur la baie.",t:"Funiculaire Centrale depuis Via Toledo, les enfants adorent."},
+  {c:"naples",n:"Bosco di Capodimonte",a:"Via Miano 2",ll:[40.8670,14.2500],cat:"kids",p:"Gratuit",d:"Immense parc boisé pour courir et pique-niquer, loin du bruit.",t:"Emportez de quoi pique-niquer."},
 
   // ROME
   {c:"rome",n:"Roscioli Salumeria con Cucina",a:"Via dei Giubbonari 21",ll:[41.8937,12.4740],cat:"trattoria",p:"€€€",d:"Épicerie fine et restaurant : carbonara et cacio e pepe de référence.",t:"Réservation quasi indispensable."},
@@ -182,11 +191,20 @@ const SPOTS = [
   {c:"rome",n:"Mercato Centrale Roma",a:"Via Giovanni Giolitti 36",ll:[41.8996,12.5000],cat:"street",p:"€",d:"Halle gourmande dans la gare Termini, stands d'artisans romains.",t:"Ouvert tard, utile en arrivant en train."},
   {c:"rome",n:"Bar San Calisto",a:"Piazza di San Calisto 3",ll:[41.8890,12.4698],cat:"cafe",p:"€",d:"Bar populaire de Trastevere, l'apéro le moins cher du quartier.",t:"Le chocolat chaud con panna en hiver."},
   {c:"rome",n:"Il Sorpasso",a:"Via Properzio 31",ll:[41.9070,12.4630],cat:"trattoria",p:"€€",d:"Bistrot de Prati, charcuteries, cuisine du marché et vins naturels.",t:"Bonne adresse près du Vatican, loin des pièges à touristes."},
-  {c:"rome",n:"Taverna dei Quaranta",a:"Via Claudia 24",ll:[41.8868,12.4950],cat:"trattoria",p:"€€",d:"Trattoria honnête et authentique à quelques minutes du Colisée.",t:"Rare bonne table si près du monument."}
+  {c:"rome",n:"Taverna dei Quaranta",a:"Via Claudia 24",ll:[41.8868,12.4950],cat:"trattoria",p:"€€",d:"Trattoria honnête et authentique à quelques minutes du Colisée.",t:"Rare bonne table si près du monument."},
+  {c:"rome",n:"Colisée et souterrains",a:"Piazza del Colosseo",ll:[41.8902,12.4922],cat:"kids",p:"€€",d:"L'arène des gladiateurs, avec les souterrains où attendaient fauves et combattants.",t:"Réservez la visite des souterrains, gratuit pour les moins de 18 ans."},
+  {c:"rome",n:"Bioparco di Roma",a:"Viale del Giardino Zoologico 20",ll:[41.9175,12.4870],cat:"kids",p:"€€",d:"Le zoo de Rome, dans la Villa Borghese.",t:"Prévoyez 3 heures et de bonnes chaussures."},
+  {c:"rome",n:"Laghetto de la Villa Borghese",a:"Viale del Lago",ll:[41.9137,12.4830],cat:"kids",p:"€",d:"Barques à rames sur le petit lac, vélos et rosalies à louer dans le parc.",t:"Combinez avec le zoo, à 10 minutes à pied."},
+  {c:"rome",n:"Catacombes de San Callisto",a:"Via Appia Antica 110",ll:[41.8590,12.5110],cat:"kids",p:"€",d:"Galeries souterraines sur plusieurs étages, visite guidée en français.",t:"Bus 118 depuis le centre, combinez avec une balade sur la Via Appia."},
+  {c:"rome",n:"Gianicolo et canon de midi",a:"Piazzale Giuseppe Garibaldi",ll:[41.8915,12.4612],cat:"kids",p:"Gratuit",d:"Le canon tire à blanc tous les jours à midi, avec la plus belle vue sur Rome.",t:"Arrivez vers 11 h 45 pour être bien placé."},
+  {c:"rome",n:"Bocca della Verità",a:"Piazza della Bocca della Verità 18",ll:[41.8881,12.4815],cat:"kids",p:"€",d:"La bouche qui mord les menteurs : la photo que tous les enfants veulent.",t:"Allez-y tôt, la file est courte avant 10 h."},
+  {c:"rome",n:"Castel Sant'Angelo",a:"Lungotevere Castello 50",ll:[41.9031,12.4663],cat:"kids",p:"€€",d:"Forteresse avec passages secrets, armes et terrasse panoramique.",t:"Gratuit pour les moins de 18 ans."},
+  {c:"rome",n:"Giardino degli Aranci",a:"Piazza Pietro d'Illiria",ll:[41.8846,12.4797],cat:"kids",p:"Gratuit",d:"Jardin d'orangers au calme sur l'Aventin, belle vue sur Rome.",t:"Regardez dans le trou de serrure des Chevaliers de Malte tout près."},
+  {c:"rome",n:"Villa Torlonia",a:"Via Nomentana 70",ll:[41.9140,12.5110],cat:"kids",p:"Gratuit",d:"Parc avec la Casina delle Civette, maison de conte de fées aux vitraux.",t:"Technotown, musée des sciences ludique, est dans le parc."}
 ];
 
-const CATS = [["all","Tout"],["pizza","Pizza"],["trattoria","Trattoria"],["street","Street food"],["sweet","Douceurs et glaces"],["cafe","Cafés et bars"]];
-const CAT_LABEL = {pizza:"Pizza",trattoria:"Trattoria",street:"Street food",sweet:"Douceurs",cafe:"Café"};
+const CATS = [["all","Tout"],["pizza","Pizza"],["trattoria","Trattoria"],["street","Street food"],["sweet","Douceurs et glaces"],["cafe","Cafés et bars"],["kids","Activités enfants"]];
+const CAT_LABEL = {pizza:"Pizza",trattoria:"Trattoria",street:"Street food",sweet:"Douceurs",cafe:"Café",kids:"Enfants"};
 
 const $ = s => document.querySelector(s);
 const store = {get(k){try{return JSON.parse(localStorage.getItem(k))}catch(e){return null}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
