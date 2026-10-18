@@ -75,6 +75,24 @@ details p{font-size:13px;color:var(--muted);margin:6px 0}
 .help ol{padding-left:20px;display:flex;flex-direction:column;gap:6px}
 .help-title{font-weight:700;color:var(--tomato)}
 .help .reload{padding:12px;align-self:flex-start}
+.head-row{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.tr-btn{flex:none;width:44px;height:44px;border-radius:12px;border:1px solid var(--line);background:var(--surface);color:var(--accent);display:grid;place-items:center;cursor:pointer}
+.tr-btn svg{width:24px;height:24px}
+dialog.tr{border:0;padding:0;margin:auto auto 0;width:100%;max-width:640px;max-height:88vh;border-radius:18px 18px 0 0;background:var(--bg);color:var(--ink)}
+dialog.tr::backdrop{background:rgba(0,0,0,.45)}
+.tr-head{position:sticky;top:0;background:var(--bg);display:flex;justify-content:space-between;align-items:center;gap:12px;padding:16px max(16px,env(safe-area-inset-right,0px)) 10px max(16px,env(safe-area-inset-left,0px));border-bottom:1px solid var(--line)}
+.tr-head h2{font-family:var(--display);font-weight:400;font-size:1.4rem;margin:0}
+.tr-close{border:0;background:var(--chip);color:var(--ink);font:600 15px var(--body);border-radius:10px;padding:8px 14px;cursor:pointer}
+.tr-body{padding:6px max(16px,env(safe-area-inset-right,0px)) calc(24px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));display:flex;flex-direction:column;gap:6px}
+.tr-body h3{font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:14px 0 2px}
+.ph{display:flex;align-items:center;gap:10px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 12px}
+.ph div{flex:1;min-width:0}
+.ph .fr{font-size:13px;color:var(--muted)}
+.ph .it{font-size:17px;font-weight:600}
+.ph .pr{font-size:13px;color:var(--accent);font-style:italic}
+.ph button{flex:none;width:40px;height:40px;border-radius:50%;border:0;background:var(--accent-soft);color:var(--accent);cursor:pointer;display:grid;place-items:center}
+.ph button svg{width:20px;height:20px}
+.tr-note{font-size:12px;color:var(--muted);margin:10px 0 0}
 footer{font-size:12px;color:var(--muted)}
 button:focus-visible,a:focus-visible,select:focus-visible,input:focus-visible,summary:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
@@ -82,7 +100,10 @@ button:focus-visible,a:focus-visible,select:focus-visible,input:focus-visible,su
 
 <div class="wrap">
   <header>
-    <h1><span class="flag" role="img" aria-label="Drapeau italien"><i></i><i></i><i></i></span>Mangia Vicino</h1>
+    <div class="head-row"><h1><span class="flag" role="img" aria-label="Drapeau italien"><i></i><i></i><i></i></span>Mangia Vicino</h1>
+      <button class="tr-btn" id="tr-open" type="button" aria-label="Phrases utiles en italien" aria-haspopup="dialog">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h8M8 3v2M10.5 5c-.6 3.5-3 6.5-6.5 8"/><path d="M6 9c1 2 2.8 3.7 5 4.5"/><path d="M13 21l4-10 4 10M14.5 17.5h5"/></svg>
+      </button></div>
     <p>Les meilleures adresses de Naples et Rome, triées selon l'endroit où vous êtes.</p>
   </header>
 
@@ -118,6 +139,11 @@ button:focus-visible,a:focus-visible,select:focus-visible,input:focus-visible,su
 
   <footer>Distances à vol d'oiseau, temps de marche estimé à 4,8 km/h. Sélection d'adresses réputées, vérifiez les horaires sur Maps avant d'y aller. Prix (restaurants) : € moins de 15 €, €€ 15 à 35 €, €€€ plus de 35 € par personne.</footer>
 </div>
+
+<dialog class="tr" id="tr" aria-labelledby="tr-title">
+  <div class="tr-head"><h2 id="tr-title">Parler italien à table</h2><button class="tr-close" id="tr-close" type="button">Fermer</button></div>
+  <div class="tr-body" id="tr-body"></div>
+</dialog>
 
 <script>
 const CITIES = {
@@ -343,6 +369,71 @@ $("#coords-go").onclick=()=>{
   applyPoint(p,"coords");
 };
 $("#coords").addEventListener("keydown",e=>{if(e.key==="Enter")$("#coords-go").click();});
+
+const PHRASES=[
+ ["En arrivant",[
+  ["Bonjour / Bonsoir","Buongiorno / Buonasera","bouonn-djorno / bouona-séra"],
+  ["Une table pour quatre, s'il vous plaît","Un tavolo per quattro, per favore","oun tavolo pèr kouattro, pèr favoré"],
+  ["J'ai réservé au nom de Yann","Ho prenotato a nome Yann","o prénotato a nomé Yann"],
+  ["On peut s'asseoir dehors ?","Possiamo sederci fuori ?","possiamo sédèrtchi fouori"],
+  ["Combien de temps faut-il attendre ?","Quanto c'è da aspettare ?","kouanto tché da aspèttaré"]]],
+ ["Pour commander",[
+  ["La carte, s'il vous plaît","Il menù, per favore","il ménou, pèr favoré"],
+  ["Qu'est-ce que vous nous conseillez ?","Cosa ci consiglia ?","koza tchi konsilia"],
+  ["Quelle est la spécialité de la maison ?","Qual è la specialità della casa ?","koual è la spétchialita dèlla kaza"],
+  ["Je voudrais...","Vorrei...","vorrèï"],
+  ["Une margherita, s'il vous plaît","Una margherita, per favore","ouna marguérita, pèr favoré"],
+  ["Pour les enfants, des pâtes à la tomate","Per le bambine, pasta al pomodoro","pèr lé bambiné, pasta al pomodoro"],
+  ["Une portion pour enfant, c'est possible ?","Si può fare una porzione per bambini ?","si pouo faré ouna portsioné pèr bambini"],
+  ["Sans gluten / Je suis allergique à...","Senza glutine / Sono allergico a...","sèntsa glouté-né / sono allèrdjiko a"]]],
+ ["Pour boire",[
+  ["Une bouteille d'eau plate / gazeuse","Una bottiglia d'acqua naturale / frizzante","ouna bottilia dakoua natouralé / fridzanté"],
+  ["Une carafe d'eau du robinet","Una caraffa d'acqua del rubinetto","ouna karaffa dakoua dèl roubinètto"],
+  ["Un verre de vin rouge / blanc","Un bicchiere di vino rosso / bianco","oun bikièré di vino rosso / bianko"],
+  ["Un quart de vin de la maison","Un quarto di vino della casa","oun kouarto di vino dèlla kaza"],
+  ["Une bière pression","Una birra alla spina","ouna birra alla spina"],
+  ["Deux Coca et un jus d'orange","Due Coca-Cola e un succo d'arancia","doué koka-kola é oun soukko darantcha"],
+  ["Un spritz, s'il vous plaît","Uno spritz, per favore","ouno spritz, pèr favoré"]]],
+ ["Pendant le repas",[
+  ["C'est délicieux !","È buonissimo !","è bouonissimo"],
+  ["Encore un peu de pain, s'il vous plaît","Ancora un po' di pane, per favore","ankora oun po di pané, pèr favoré"],
+  ["Où sont les toilettes ?","Dov'è il bagno ?","dové il bagno"],
+  ["On partage","Lo dividiamo","lo dividiamo"]]],
+ ["Café, glace, dessert",[
+  ["Un café / Un cappuccino","Un caffè / Un cappuccino","oun kaffè / oun kapoutchino"],
+  ["Qu'avez-vous comme desserts ?","Che dolci avete ?","ké doltchi avété"],
+  ["Un cornet / Un pot, deux parfums","Un cono / Una coppetta, due gusti","oun kono / ouna koppètta, doué gousti"],
+  ["Avec de la chantilly","Con panna","kon panna"]]],
+ ["L'addition",[
+  ["L'addition, s'il vous plaît","Il conto, per favore","il konto, pèr favoré"],
+  ["Je peux payer par carte ?","Posso pagare con la carta ?","posso pagaré kon la karta"],
+  ["Le service est compris ?","Il servizio è incluso ?","il sèrvitsio è inklouzo"],
+  ["Merci beaucoup, au revoir !","Grazie mille, arrivederci !","gratsié millé, arrivédèrtchi"]]]
+];
+const SPEAK='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13"/></svg>';
+function sayIt(txt){
+  try{if(!("speechSynthesis" in window))return;speechSynthesis.cancel();
+    const u=new SpeechSynthesisUtterance(txt.replace(/\s*\/\s*/g,", ").replace(/\.\.\./g,""));u.lang="it-IT";u.rate=.9;
+    const v=speechSynthesis.getVoices().find(v=>/^it/i.test(v.lang));if(v)u.voice=v;speechSynthesis.speak(u);}catch(e){}
+}
+(function buildPhrases(){
+  const body=$("#tr-body");
+  PHRASES.forEach(([title,list])=>{
+    const h=document.createElement("h3");h.textContent=title;body.appendChild(h);
+    list.forEach(([fr,it,pr])=>{
+      const row=document.createElement("div");row.className="ph";
+      row.innerHTML='<div><div class="fr"></div><div class="it" lang="it"></div><div class="pr"></div></div><button type="button">'+SPEAK+'</button>';
+      row.querySelector(".fr").textContent=fr;row.querySelector(".it").textContent=it;row.querySelector(".pr").textContent=pr;
+      const b=row.querySelector("button");b.setAttribute("aria-label","Écouter : "+it);b.onclick=()=>sayIt(it);
+      body.appendChild(row);
+    });
+  });
+  const n=document.createElement("p");n.className="tr-note";n.textContent="Touchez le haut-parleur pour entendre la phrase. Si rien ne sort, vérifiez que l'iPhone n'est pas en mode silencieux.";body.appendChild(n);
+  const d=$("#tr");
+  $("#tr-open").onclick=()=>{if(d.showModal)d.showModal();else d.setAttribute("open","");};
+  $("#tr-close").onclick=()=>d.close?d.close():d.removeAttribute("open");
+  d.addEventListener("click",e=>{if(e.target===d)d.close();});
+})();
 
 renderCity();renderChips();renderList();
 setStatus(`Position d'exemple : <strong>${zoneName()}</strong>. Touchez le bouton vert ou choisissez votre quartier.`);
