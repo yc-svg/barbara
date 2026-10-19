@@ -162,7 +162,7 @@ const CITIES = {
     ["Vatican / Prati",41.9060,12.4560],["Place d'Espagne",41.9058,12.4823],["Testaccio",41.8770,12.4760]]}
 };
 
-// cat: pizza | trattoria | street | sweet | cafe | kids
+// cat: pizza | trattoria | street | sweet | cafe | kids | breakfast | brunch
 const SPOTS = [
   // NAPLES
   {c:"naples",n:"L'Antica Pizzeria da Michele",r:"non",a:"Via Cesare Sersale 1",ll:[40.8497,14.2632],cat:"pizza",p:"€",d:"Le temple de la pizza depuis 1870 : seulement marinara et margherita.",t:"Prenez un ticket à l'entrée, la file avance vite."},
@@ -197,7 +197,22 @@ const SPOTS = [
   {c:"naples",n:"Funiculaire et Castel Sant'Elmo",a:"Via Tito Angelini 22",ll:[40.8434,14.2390],cat:"kids",p:"€",d:"Montée en funiculaire puis forteresse avec la plus belle vue sur la baie.",t:"Funiculaire Centrale depuis Via Toledo, les enfants adorent."},
   {c:"naples",n:"Bosco di Capodimonte",a:"Via Miano 2",ll:[40.8670,14.2500],cat:"kids",p:"Gratuit",d:"Immense parc boisé pour courir et pique-niquer, loin du bruit.",t:"Emportez de quoi pique-niquer."},
 
+  {c:"naples",n:"Caffè Mexico",a:"Piazza Dante 86",ll:[40.8487,14.2500],cat:"breakfast",p:"€",d:"Le café le plus réputé de Naples, déjà sucré à la napolitaine, avec cornetto au comptoir.",t:"Dites « senza zucchero » si vous le voulez sans sucre."},
+  {c:"naples",n:"Pasticceria Poppella",a:"Via Arena della Sanità 24",ll:[40.8600,14.2508],cat:"breakfast",p:"€",d:"Maison du fiocco di neve, petite brioche fourrée de crème de lait.",t:"Prenez-en une boîte, les enfants adorent."},
+  {c:"naples",n:"La Sfogliatella Mary",a:"Galleria Umberto I, Via Toledo 66",ll:[40.8385,14.2490],cat:"breakfast",p:"€",d:"Comptoir à sfogliatelle chaudes à l'entrée de la Galleria Umberto.",t:"Riccia croustillante ou frolla tendre, goûtez les deux."},
+  {c:"naples",n:"Caffè del Professore",a:"Piazza Trieste e Trento 46",ll:[40.8372,14.2489],cat:"breakfast",p:"€",d:"Bar célèbre pour son caffè alla nocciola, crème de noisette mousseuse.",t:"Chocolat chaud épais pour les enfants en hiver."},
+  {c:"naples",n:"Pasticceria Moccia",a:"Via San Pasquale a Chiaia 21",ll:[40.8355,14.2398],cat:"breakfast",p:"€",d:"Pâtisserie élégante de Chiaia, babà et viennoiseries du matin.",t:"Idéal avant une balade sur le Lungomare."},
+  {c:"naples",n:"Gran Caffè Cimmino",a:"Via Gaetano Filangieri 12",ll:[40.8370,14.2440],cat:"brunch",p:"€€",d:"Grand bar de Chiaia avec salé et sucré toute la journée, terrasse agréable.",t:"Le vrai brunch reste rare à Naples, c'est la meilleure option en ville."},
+
   // ROME
+  {c:"rome",n:"Roscioli Caffè",a:"Piazza Benedetto Cairoli 16",ll:[41.8939,12.4752],cat:"breakfast",p:"€",d:"Le bar-pâtisserie de la famille Roscioli : maritozzi, cornetti et excellent café.",t:"Mangez debout au comptoir, comme les Romains."},
+  {c:"rome",n:"Ciampini",a:"Piazza San Lorenzo in Lucina 29",ll:[41.9035,12.4790],cat:"breakfast",p:"€€",d:"Café historique sur une jolie place piétonne près du Corso.",t:"Leur glace est aussi excellente, pour l'après-midi."},
+  {c:"rome",n:"Le Levain",a:"Via Luigi Santini 22",ll:[41.8875,12.4715],cat:"breakfast",p:"€",d:"Boulangerie française de Trastevere, croissants et pains au chocolat parfaits.",t:"Si les enfants réclament des viennoiseries comme en France."},
+  {c:"rome",n:"Panella",a:"Via Merulana 54",ll:[41.8955,12.5005],cat:"breakfast",p:"€",d:"Boulangerie historique de l'Esquilin, salle et terrasse pour le petit-déjeuner.",t:"Brunch copieux le week-end, à deux pas de Termini."},
+  {c:"rome",n:"Marigold",a:"Via Giovanni da Empoli 37",ll:[41.8705,12.4790],cat:"brunch",r:"oui",p:"€€",d:"Le brunch le plus réputé de Rome, pain maison et produits scandinaves.",t:"Le week-end, réservez plusieurs jours avant."},
+  {c:"rome",n:"Coromandel",a:"Via di Monte Giordano 60",ll:[41.8995,12.4695],cat:"brunch",r:"soir",p:"€€",d:"Petit café cosy près de Navona, pancakes et œufs servis toute la journée.",t:"Arrivez avant 11 h le week-end."},
+  {c:"rome",n:"Ginger",a:"Via Borgognona 43",ll:[41.9052,12.4808],cat:"brunch",p:"€€",d:"Brunch sain et jus pressés près de la place d'Espagne.",t:"Pratique entre deux visites du centre."},
+  {c:"rome",n:"Barnum Café",a:"Via del Pellegrino 87",ll:[41.8963,12.4703],cat:"brunch",p:"€€",d:"Café vintage près de Campo de' Fiori, brunch le week-end.",t:"Ambiance détendue, bons cappuccinos."},
   {c:"rome",n:"Roscioli Salumeria con Cucina",r:"oui",a:"Via dei Giubbonari 21",ll:[41.8937,12.4740],cat:"trattoria",p:"€€€",d:"Épicerie fine et restaurant : carbonara et cacio e pepe de référence.",t:"Réservation quasi indispensable."},
   {c:"rome",n:"Antico Forno Roscioli",a:"Via dei Chiavari 34",ll:[41.8941,12.4743],cat:"street",p:"€",d:"Boulangerie : pizza bianca et pizza rossa au poids.",t:"Idéal le matin ou pour un déjeuner sur le pouce."},
   {c:"rome",n:"Da Enzo al 29",r:"non",a:"Via dei Vascellari 29",ll:[41.8885,12.4772],cat:"trattoria",p:"€€",d:"Petite trattoria de Trastevere, cuisine romaine très régulière.",t:"File d'attente à l'ouverture, arrivez 15 minutes avant."},
@@ -237,9 +252,9 @@ const SPOTS = [
   {c:"rome",n:"Villa Torlonia",a:"Via Nomentana 70",ll:[41.9140,12.5110],cat:"kids",p:"Gratuit",d:"Parc avec la Casina delle Civette, maison de conte de fées aux vitraux.",t:"Technotown, musée des sciences ludique, est dans le parc."}
 ];
 
-const CATS = [["all","Tout"],["pizza","Pizza"],["trattoria","Trattoria"],["street","Street food"],["sweet","Douceurs et glaces"],["cafe","Cafés et bars"],["kids","Activités enfants"]];
+const CATS = [["all","Tout"],["breakfast","Petit-déjeuner"],["brunch","Brunch"],["pizza","Pizza"],["trattoria","Trattoria"],["street","Street food"],["sweet","Douceurs et glaces"],["cafe","Cafés et bars"],["kids","Activités enfants"]];
 const RESA = {oui:["Réserver avant","resa-yes"],soir:["Réserver le soir et le week-end","resa-mid"],non:["Sans réservation, file possible","resa-no"]};
-const CAT_LABEL = {pizza:"Pizza",trattoria:"Trattoria",street:"Street food",sweet:"Douceurs",cafe:"Café",kids:"Enfants"};
+const CAT_LABEL = {pizza:"Pizza",trattoria:"Trattoria",street:"Street food",sweet:"Douceurs",cafe:"Café",kids:"Enfants",breakfast:"Petit-déj",brunch:"Brunch"};
 
 const $ = s => document.querySelector(s);
 const store = {get(k){try{return JSON.parse(localStorage.getItem(k))}catch(e){return null}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
